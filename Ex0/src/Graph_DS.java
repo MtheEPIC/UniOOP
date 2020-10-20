@@ -7,8 +7,14 @@ public class Graph_DS implements graph {
     int edgeCount;
 
     public Graph_DS() {
-         this.nodes = new ArrayList();
-         this.edgeCount = 0;
+        this(new ArrayList<>(), 0);
+//        this.nodes = new ArrayList();
+//        this.edgeCount = 0;
+    }
+
+    public Graph_DS(Collection<node_data> nodes, int edgeCount) {
+        this.nodes = new ArrayList<>(nodes);
+        this.edgeCount = edgeCount;
     }
 
     @Override
@@ -25,7 +31,6 @@ public class Graph_DS implements graph {
     public boolean hasEdge(int node1, int node2) {
         node_data node1DS = getNode(node1);
         return node1DS.hasNi(node2);
-//        return false; //TODO
     }
 
     @Override
@@ -46,13 +51,16 @@ public class Graph_DS implements graph {
     }
 
     @Override
-    public Collection<node_data> getV() {
-        return null; //TODO
+    public Collection<node_data> getV() { //shallow copy
+        return this.nodes;
     }
 
     @Override
     public Collection<node_data> getV(int node_id) {
-        return null; //TODO
+        ArrayList<node_data> nodeNeighbors = new ArrayList<node_data>(this.nodes);
+        node_data nodeDs = this.getNode(node_id);
+        nodeNeighbors.remove(nodeDs);
+        return nodeNeighbors; //TODO O1
     }
 
     @Override
