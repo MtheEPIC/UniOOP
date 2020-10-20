@@ -17,6 +17,11 @@ public class Graph_DS implements graph {
         this.edgeCount = edgeCount;
     }
 
+    public Graph_DS(Graph_DS g) {
+        this.nodes = new ArrayList<>(g.getV());
+        this.edgeCount = g.edgeSize();
+    }
+
     @Override
     public node_data getNode(int key) {
         try {
