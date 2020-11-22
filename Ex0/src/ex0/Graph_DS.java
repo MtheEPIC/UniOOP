@@ -45,9 +45,11 @@ public class Graph_DS implements graph {
 
     @Override
     public void connect(int node1, int node2) {
-        // O1
         node_data node1Pointer = getNode(node1);
         node_data node2Pointer = getNode(node2);
+        if(node1==node2) { //Assume you can't connect a node to itself
+            return;
+        }
         if(!node1Pointer.hasNi(node2)) {
             node1Pointer.addNi(node2Pointer);
             node2Pointer.addNi(node1Pointer);
@@ -62,10 +64,7 @@ public class Graph_DS implements graph {
 
     @Override
     public Collection<node_data> getV(int node_id) {
-        ArrayList<node_data> nodeNeighbors = new ArrayList<node_data>(this.nodes);
-        node_data nodeDs = this.getNode(node_id);
-        nodeNeighbors.remove(nodeDs);
-        return nodeNeighbors; //TODO O1
+        return this.getNode(node_id).getNi();
     }
 
     @Override
@@ -77,12 +76,15 @@ public class Graph_DS implements graph {
          * @return the data of the removed node (null if none).
          * @param key
          */
-        node_data nodePointer = getNode(key);
+        node_data nodePointer = this.getNode(key);
+        if (nodePointer == null) {
+            return null;
+        }
         Collection<node_data> neighbors = nodePointer.getNi();
         for (node_data node : neighbors) {
             node.removeNode(nodePointer);
         }
-        return null; //TODO @return the data of the removed node (null if none).
+        return nodePointer;
     }
 
     @Override
@@ -100,16 +102,16 @@ public class Graph_DS implements graph {
 
     @Override
     public int nodeSize() {
-        return 0;
+        return this.nodes.size();
     }
 
     @Override
     public int edgeSize() {
-        return this.edgeCount; //tmp
+        return this.edgeCount;
     }
 
     @Override
-    public int getMC() {
+    public int getMC() { //TODO implement
         return 0;
     }
 }
